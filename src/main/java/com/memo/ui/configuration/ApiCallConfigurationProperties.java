@@ -9,10 +9,12 @@ public class ApiCallConfigurationProperties {
 
     private final String host;
     private final int port;
+    private final String pathName;
 
-    public ApiCallConfigurationProperties(String host, int port) {
+    public ApiCallConfigurationProperties(String host, int port, String pathName) {
         this.host = host;
         this.port = port;
+        this.pathName = pathName;
     }
 
     public String getHost() {
@@ -21,6 +23,10 @@ public class ApiCallConfigurationProperties {
 
     public int getPort() {
         return this.port;
+    }
+
+    public String getPathName() {
+        return this.pathName;
     }
 
 }

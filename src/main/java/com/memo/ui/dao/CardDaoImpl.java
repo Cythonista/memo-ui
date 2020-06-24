@@ -2,6 +2,7 @@ package com.memo.ui.dao;
 
 import com.memo.ui.configuration.ApiCallConfigurationProperties;
 import com.memo.ui.domain.CardList;
+import com.memo.ui.domain.CardSelector;
 import java.util.Collections;
 import java.util.Map;
 import javax.smartcardio.Card;
@@ -26,7 +27,7 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
-    public CardList find() {
+    public CardList find(CardSelector cardSelector) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.cardApiUrlPrefix);
         return this.restOperations.getForObject(builder.build().toUriString(), CardList.class);
     }
@@ -41,7 +42,7 @@ public class CardDaoImpl implements CardDao, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/services/v1/cards";
+        this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/list";
     }
 
 }
