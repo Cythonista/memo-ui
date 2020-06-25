@@ -1,0 +1,32 @@
+# ------------------------------
+# Servlet関連設定
+# ------------------------------
+server:
+  # 接続ポート(localhostでAPIと同時起動するとぶつかるのでずらす)
+  port: 8081
+
+# ------------------------------
+# アプリケーション独自設定
+# ------------------------------
+workshop.api.call:
+  # 接続先APIのホストとポート番号の指定
+  host: localhost
+  port: 8080
+
+# ------------------------------
+# ログレベル設定
+# ------------------------------
+logging.level:
+  org.thymeleaf.TemplateEngine.TIMER: trace
+
+#spring:
+#  thymeleaf:
+#    cache: false
+#  devtools:
+#    restart:
+#      enabled: true
+
+#authentication:
+#  tempPasswordLength: 8
+# passwordExpiredDays: 180
+# tempPasswordExpiredDays: 1
