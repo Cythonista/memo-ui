@@ -19,8 +19,7 @@ public class CardController {
 
     @GetMapping(path="/list")
     public String list(Model model) {
-        CardSelector cardSelector = new CardSelector();
-        CardList cardList = this.cardDao.find(cardSelector);
+        CardList cardList = this.cardDao.find();
         model.addAttribute("cards", cardList.getCards());
         return "list";
     }

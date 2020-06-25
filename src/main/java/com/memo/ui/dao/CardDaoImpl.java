@@ -27,7 +27,7 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
-    public CardList find(CardSelector cardSelector) {
+    public CardList find() {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.cardApiUrlPrefix);
         return this.restOperations.getForObject(builder.build().toUriString(), CardList.class);
     }
