@@ -1,12 +1,14 @@
 package com.memo.ui.dao;
 
 import com.memo.ui.configuration.ApiCallConfigurationProperties;
+import com.memo.ui.domain.Card;
 import com.memo.ui.domain.CardList;
-import com.memo.ui.domain.CardSelector;
 import java.util.Collections;
 import java.util.Map;
-import javax.smartcardio.Card;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
@@ -38,6 +40,32 @@ public class CardDaoImpl implements CardDao, InitializingBean {
         Map<String, String> params = Collections.singletonMap("cardId", cardId.toString());
         ResponseEntity<Card> responseEntity = this.restOperations.getForEntity(getApiUrl, Card.class, params);
         return responseEntity.getBody();
+    }
+
+    @Override
+    public void add(Card card) {
+        String addApiUrl = this.cardApiUrlPrefix;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Card> request = new HttpEntity<>(card, headers);
+        this.restOperations.postForObject(addApiUrl, request, String.class);
+    }
+
+    @Override
+    public void set(Card card) {
+        String setApiUrl = this.cardApiUrlPrefix + "/{cardId}";
+        Map<String, String> params = Collections.singletonMap("cardId", card.getCardId().toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Card> request = new HttpEntity<>(card, headers);
+        this.restOperations.postForObject(setApiUrl, request, String.class, params);
+    }
+
+    @Override
+    public void remove(Long cardId) {
+        String removeApiUrl = this.cardApiUrlPrefix + "/{cardId}";
+        Map<String, String> params = Collections.singletonMap("cardId", cardId.toString());
+        this.restOperations.delete(removeApiUrl, params);
     }
 
     @Override
