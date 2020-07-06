@@ -29,11 +29,8 @@ public class CardController {
         return "list";
     }
 
-    @PostMapping(path="")
+    @GetMapping(path="/add")
     public String add(@ModelAttribute Card card, Model model) {
-        CardList cardList = this.cardDao.find();
-        this.cardDao.add(card);
-        model.addAttribute("cards", cardList.getCards());
-        return "list";
+        return "add";
     }
 }
