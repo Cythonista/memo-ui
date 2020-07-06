@@ -1,12 +1,16 @@
 package com.memo.ui.dao;
 
 import com.memo.ui.configuration.ApiCallConfigurationProperties;
+import com.memo.ui.domain.Card;
 import com.memo.ui.domain.CardList;
 import com.memo.ui.domain.CardSelector;
 import java.util.Collections;
 import java.util.Map;
-import javax.smartcardio.Card;
+
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
@@ -41,8 +45,17 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
+    public void add(Card card) {
+        String addApiUrl = this.cardApiUrlPrefix;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Card> request = new HttpEntity<>(card, headers);
+        this.restOperations.postForObject(addApiUrl, request, String.class);
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
-        this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/list";
+        this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/v1/list";
     }
 
 }

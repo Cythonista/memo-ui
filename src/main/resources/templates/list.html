@@ -1,6 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script type="text/javascript" th:src="@{/js/add.js}"></script>
     <title>カードリスト</title>
     <meta content="cardList" name="page-name">
 
@@ -8,6 +9,8 @@
 <body>
 <header></header>
 <div class="container mx-auto" id="content">
+    <!-- <input type="button" value="カード追加" onclick="add();"/> -->
+    <!-- <input type="hidden" id="alertString1" th:value="${alertString1}" /> -->
     <div class="row mb-3">
         <h3>カード一覧</h3>
     </div>
