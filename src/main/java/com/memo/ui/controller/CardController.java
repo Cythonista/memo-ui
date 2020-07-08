@@ -3,9 +3,9 @@ package com.memo.ui.controller;
 import com.memo.ui.dao.CardDao;
 import com.memo.ui.domain.Card;
 import com.memo.ui.domain.CardList;
-import com.memo.ui.domain.CardSelector;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +31,17 @@ public class CardController {
 
     @GetMapping(path="/add")
     public String add(@ModelAttribute Card card, Model model) {
+        model.addAttribute("card", new Card());
         return "add";
+    }
+
+    @PostMapping(path="/add")
+    public String add(@Validated Card card, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "カード新規登録");
+            return "add";
+        }
+        this.cardDao.add(card);
+        return "redirect:list";
     }
 }

@@ -1,6 +1,7 @@
 package com.memo.ui.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -57,5 +58,24 @@ public class CardDaoTest {
         assertEquals(card.getCardId(), actual.getCardId());
         assertEquals(card.getCardName(), actual.getCardName());
         mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void testAdd() {
+        Card card = new Card();
+        card.setCardId(1L);
+        card.setCardName("カードチャンネル");
+
+        String expectJson = JsonConverter.toString(card);
+        MockRestServiceServer mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
+        mockRestServiceServer
+                .expect(requestTo("http://localhost:8080/v1/list"))
+                .andExpect(method(HttpMethod.POST))
+                .andExpect(content().string(expectJson))
+                .andRespond(withSuccess("", MediaType.APPLICATION_JSON_UTF8));
+
+        target.add(card);
+        mockRestServiceServer.verify();
+
     }
 }
