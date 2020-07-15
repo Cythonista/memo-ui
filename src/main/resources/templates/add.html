@@ -15,8 +15,7 @@
         <h3>カード追加</h3>
     </div>
     <div class="row">
-        <form method="post" th:action="@{/v1/add}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <form method="post" th:action="@{/add}" th:object="${card}">
             <input id="cardName" name="cardName" placeholder="カード名" th:value="${card.cardName}" type="text">
             <input id="overview" name="overview" placeholder="概要" th:value="${card.overview}" type="text">
             <button id="submit" type="submit">登録</button>

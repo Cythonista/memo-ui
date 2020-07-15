@@ -46,7 +46,7 @@ public class CardControllerTest {
         Mockito.doReturn(findResult).when(cardDao).find();
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/list"))
+                .get("/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("list"))
                 .andExpect(model().attribute("cards", cards));
@@ -56,7 +56,7 @@ public class CardControllerTest {
     @Test
     public void testAddGet() throws Exception {
         // when, then: テスト対象メソッド実行
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/add")
+        mockMvc.perform(MockMvcRequestBuilders.get("/add")
                 .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("add"));
@@ -73,13 +73,12 @@ public class CardControllerTest {
         };
         Mockito.doNothing().when(cardDao).add(Mockito.argThat(matcher));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/add")
                         .param("cardName", card.getCardName())
                         .param("overview", card.getOverview())
                         .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(flash().attribute("msg", String.format("カード「%s」登録をしました。", card.getCardName())))
-                .andExpect(view().name("/add"));
+                .andExpect(view().name("redirect:/list"));
 
         Mockito.verify(cardDao, Mockito.times(1)).add(Mockito.argThat(matcher));
     }
