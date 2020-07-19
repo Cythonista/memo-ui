@@ -3,7 +3,6 @@ package com.memo.ui.test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.memo.ui.dao.SystemErrorException;
-import com.memo.ui.domain.CardList;
 
 public class JsonConverter {
     private static ObjectMapper mapper = new ObjectMapper();

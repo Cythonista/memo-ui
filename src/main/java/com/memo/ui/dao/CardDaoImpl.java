@@ -3,7 +3,6 @@ package com.memo.ui.dao;
 import com.memo.ui.configuration.ApiCallConfigurationProperties;
 import com.memo.ui.domain.Card;
 import com.memo.ui.domain.CardList;
-import com.memo.ui.domain.CardSelector;
 import java.util.Collections;
 import java.util.Map;
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{/js/alert.js}"></script>
+    <title>カード編集</title>
+    <meta content="cardList" name="page-name">
+
+</head>
+<body>
+<header></header>
+<div class="container mx-auto" id="content">
+    <div class="row mb-3">
+        <h3>カード編集</h3>
+    </div>
+    <div class="row">
+        <form method="post" th:action="@{/edit}" th:object="${card}">
+            <input id="cardId" name="cardId" placeholder="カードID" th:value="${card.cardId}" type="text">
+            <input id="cardName" name="cardName" placeholder="カード名" th:value="${card.cardName}" type="text">
+            <input id="overview" name="overview" placeholder="概要" th:value="${card.overview}" type="text">
+            <button id="submit" type="submit">登録</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

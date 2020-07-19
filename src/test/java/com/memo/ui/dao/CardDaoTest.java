@@ -48,7 +48,7 @@ public class CardDaoTest {
 
         String expectJson = JsonConverter.toString(cardList);
         MockRestServiceServer mockRestServiceServer= MockRestServiceServer.bindTo(restTemplate).build();
-        mockRestServiceServer.expect(requestTo("http://localhost:8080/list"))
+        mockRestServiceServer.expect(requestTo("http://localhost:8080/v1/card"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(expectJson, MediaType.APPLICATION_JSON_UTF8));
 
@@ -69,7 +69,7 @@ public class CardDaoTest {
         String expectJson = JsonConverter.toString(card);
         MockRestServiceServer mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
         mockRestServiceServer
-                .expect(requestTo("http://localhost:8080/v1/list"))
+                .expect(requestTo("http://localhost:8080/v1/card"))
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(content().string(expectJson))
                 .andRespond(withSuccess("", MediaType.APPLICATION_JSON_UTF8));
