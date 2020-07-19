@@ -81,4 +81,43 @@ public class CardControllerTest {
         Mockito.verify(cardDao, Mockito.times(1)).add(Mockito.argThat(matcher));
     }
 
+    @Test
+    public void testEditGet() throws Exception {
+        Card card = testCard.create();
+        ArgumentMatcher<Long> cardId = argument -> {
+            assertEquals(card.getCardId(), argument);
+            return true;
+        };
+        Mockito.doReturn(card).when(cardDao).get(Mockito.argThat(cardId));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/edit")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .param("cardId", card.getCardId().toString()))
+                .andExpect(view().name("edit"))
+                .andExpect(model().attribute("card", card));
+        Mockito.verify(cardDao, Mockito.times(1)).get(Mockito.argThat(cardId));
+    }
+
+    @Test
+    public void testEditPost() throws Exception {
+        Card card = testCard.create();
+        ArgumentMatcher<Card> matcher = argument -> {
+            assertEquals(card.getCardId(), argument.getCardId());
+            assertEquals(card.getCardName(), argument.getCardName());
+            assertEquals(card.getOverview(), argument.getOverview());
+            return true;
+        };
+        Mockito.doNothing().when(cardDao).set(Mockito.argThat(matcher));
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/edit")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("cardId", card.getCardId().toString())
+                        .param("cardName", card.getCardName())
+                        .param("overview", card.getOverview()))
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(view().name("redirect:/list"));
+
+        Mockito.verify(cardDao, Mockito.times(1)).set(Mockito.argThat(matcher));
+    }
+
 }
