@@ -65,9 +65,11 @@ public class CardController {
         return "redirect:/list";
     }
 
-    @GetMapping(path="/list")
+    @GetMapping(path="/delete")
     public String delete(@RequestParam(name = "cardId") Long cardId, Model model) {
-        return "redirect:list";
+        this.cardDao.get(cardId);
+        this.cardDao.remove(cardId);
+        return "redirect:/list";
     }
 
 }
