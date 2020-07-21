@@ -23,26 +23,24 @@
             </thead>
             <tbody>
             <tr th:each="card : ${cards}">
-                <th:block th:if="${card.deleteFlag != 0}">
-                    <td>
-                        <p th:text="${card.cardId}">
-                    </td>
-                    <td>
-                        <p th:text="${card.cardName}"></p>
-                    </td>
-                    <td>
-                        <p th:text="${card.overview}"></p>
-                    </td>
-                    <td>
-                        <p th:text="${#temporals.format(card.updatedAt, 'yyyy/MM/dd HH:mm:dd.SSS')}"></p>
-                    </td>
-                    <td>
-                        <a th:href="@{/edit(cardId=${card.cardId})}" th:text="編集"></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/delete(cardId=${card.cardId})}" th:text="削除"></a>
-                    </td>
-                </th:block>
+                <td>
+                    <p th:text="${card.cardId}">
+                </td>
+                <td>
+                    <p th:text="${card.cardName}"></p>
+                </td>
+                <td>
+                    <p th:text="${card.overview}"></p>
+                </td>
+                <td>
+                    <p th:text="${#temporals.format(card.updatedAt, 'yyyy/MM/dd HH:mm:dd.SSS')}"></p>
+                </td>
+                <td>
+                    <a th:href="@{/edit(cardId=${card.cardId})}" th:text="編集"></a>
+                </td>
+                <td>
+                    <a th:href="@{/delete(cardId=${card.cardId})}" th:text="削除"></a>
+                </td>
             </tr>
             </tbody>
         </table>
