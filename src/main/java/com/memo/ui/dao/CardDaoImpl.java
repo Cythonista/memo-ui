@@ -53,6 +53,16 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
+    public void set(Card card) {
+        String setApiUrl = this.cardApiUrlPrefix + "/{cardId}";
+        Map<String, String> params = Collections.singletonMap("cardId", card.getCardId().toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Card> request  =new HttpEntity<>(card, headers);
+        this.restOperations.patchForObject(setApiUrl, request, String.class, params);
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/v1/card";
     }

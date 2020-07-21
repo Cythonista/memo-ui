@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "")
@@ -35,6 +36,7 @@ public class CardController {
     public String add(@ModelAttribute Card card,Model model) {
         return "add";
     }
+
     @PostMapping(path="/add")
     public String add(@ModelAttribute Card card, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -45,4 +47,21 @@ public class CardController {
         this.cardDao.add(card);
         return "redirect:/list";
     }
+
+    @GetMapping(path="/edit")
+    public String edit(@RequestParam(name="cardId") Long cardId, Model model) {
+        Card card = this.cardDao.get(cardId);
+        model.addAttribute("card", card);
+        return "edit";
+    }
+
+    @PostMapping(path="/edit")
+    public String edit(@ModelAttribute Card card, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "edit";
+        }
+        this.cardDao.set(card);
+        return "redirect:/list";
+    }
+
 }

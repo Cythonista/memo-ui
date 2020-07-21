@@ -9,4 +9,5 @@ public interface CardDao {
     CardList find();
     Card get(Long cardId);
     void add(Card card);
+    void set(Card card);
 }
