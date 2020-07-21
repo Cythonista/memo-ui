@@ -1,6 +1,7 @@
 package com.memo.ui.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import com.memo.ui.UiApplication;
@@ -118,6 +119,24 @@ public class CardControllerTest {
                 .andExpect(view().name("redirect:/list"));
 
         Mockito.verify(cardDao, Mockito.times(1)).set(Mockito.argThat(matcher));
+    }
+
+    @Test
+    public void testDeleteGet() throws Exception {
+        Card card = testCard.create();
+        ArgumentMatcher<Long> matcher = argument -> {
+            assertEquals(card.getCardId(), argument);
+            return true;
+        };
+        Mockito.doReturn(card).when(cardDao).get(Mockito.argThat(matcher));
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/delete")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .param("cardId", card.getCardId().toString()))
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(view().name("redirect:/list"));
+        Mockito.verify(cardDao, Mockito.times(1))
+                .remove(Mockito.argThat(matcher));
     }
 
 }

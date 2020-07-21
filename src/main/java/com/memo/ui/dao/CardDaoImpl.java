@@ -63,6 +63,13 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
+    public void remove(Long cardId) {
+        String removeApiUrl = this.cardApiUrlPrefix + "/{cardId}";
+        Map<String, String> params = Collections.singletonMap("cardId", cardId.toString());
+        this.restOperations.delete(removeApiUrl, params);
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/v1/card";
     }

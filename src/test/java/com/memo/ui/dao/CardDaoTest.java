@@ -115,4 +115,22 @@ public class CardDaoTest {
         target.set(card);
         mockRestServiceServer.verify();
     }
+
+    @Test
+    public void testRemove() {
+        Card card = new Card();
+        card.setCardId(1L);
+        card.setCardName("カード1");
+        card.setOverview("概要");
+
+        String expectJson = JsonConverter.toString(card);
+        MockRestServiceServer mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
+        mockRestServiceServer
+                .expect(requestTo("http://localhost:8080/v1/card" + "/" + card.getCardId()))
+                .andExpect(method(HttpMethod.DELETE))
+                .andRespond(withSuccess("", MediaType.APPLICATION_JSON_UTF8));
+
+        target.remove(card.getCardId());
+        mockRestServiceServer.verify();
+    }
 }
