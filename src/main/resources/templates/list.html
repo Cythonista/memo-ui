@@ -35,6 +35,9 @@
                 <td>
                     <p th:text="${#temporals.format(card.updatedAt, 'yyyy/MM/dd HH:mm:dd.SSS')}"></p>
                 </td>
+                <td>
+                    <a th:href="@{/edit(cardId=${card.cardId})}" th:text="編集"></a>
+                </td>
             </tr>
             </tbody>
         </table>

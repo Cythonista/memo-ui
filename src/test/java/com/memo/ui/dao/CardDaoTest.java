@@ -59,6 +59,25 @@ public class CardDaoTest {
         assertEquals(card.getCardName(), actual.getCardName());
         mockRestServiceServer.verify();
     }
+    @Test
+    public void testGet() {
+        Card card = new Card();
+        card.setCardId(1L);
+        card.setCardName("カード1");
+
+        String expectJson = JsonConverter.toString(card);
+        MockRestServiceServer mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
+        mockRestServiceServer
+                .expect(requestTo("http://localhost:8080/v1/card/1"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(expectJson, MediaType.APPLICATION_JSON_UTF8));
+
+        Card actual = target.get(card.getCardId());
+
+        assertEquals(card.getCardId(), actual.getCardId());
+        assertEquals(card.getCardName(), actual.getCardName());
+        mockRestServiceServer.verify();
+    }
 
     @Test
     public void testAdd() {
