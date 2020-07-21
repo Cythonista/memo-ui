@@ -63,6 +63,11 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
+    public void delete(Card card) {
+
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         this.cardApiUrlPrefix = "http://" + this.properties.getHost() + ":" + this.properties.getPort() + "/v1/card";
     }

@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,11 @@ public class CardController {
         }
         this.cardDao.set(card);
         return "redirect:/list";
+    }
+
+    @GetMapping(path="/list")
+    public String delete(@RequestParam(name = "cardId") Long cardId, Model model) {
+        return "redirect:list";
     }
 
 }
