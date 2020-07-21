@@ -63,7 +63,7 @@ public class CardDaoImpl implements CardDao, InitializingBean {
     }
 
     @Override
-    public void delete(Long cardId) {
+    public void remove(Long cardId) {
         String removeApiUrl = this.cardApiUrlPrefix + "/{cardId}";
         Map<String, String> params = Collections.singletonMap("cardId", cardId.toString());
         this.restOperations.delete(removeApiUrl, params);
